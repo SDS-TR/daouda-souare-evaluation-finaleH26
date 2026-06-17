@@ -1,0 +1,19 @@
+{
+  "email": "user@mail.com",
+  "emprunts": [
+    {
+      "id_livre": 4,
+      "titre": "Harry Potter à l'école des sorciers",
+      "auteur": "J.K. Rowling",
+      "date_emprunt": "2026-03-01",
+      "date_retour_prevue": "2026-03-15"
+    },
+    {
+      "id_livre": 5,
+      "titre": "Les Misérables",
+      "auteur": "Victor Hugo",
+      "date_emprunt": "2026-03-05",
+      "date_retour_prevue": "2026-03-19"
+    }
+  ]
+}
