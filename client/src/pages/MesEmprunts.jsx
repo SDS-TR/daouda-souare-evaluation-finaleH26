@@ -19,7 +19,7 @@ function MesEmprunts() {
         setLoading(true);
 
         axios
-        .get(`${API_URL}/api/livres/emprunts`, {
+        .get(`${API_URL}/api/emprunts`, {
             params: { email }
         })
         .then(res => {

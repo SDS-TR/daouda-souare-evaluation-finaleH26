@@ -11,8 +11,10 @@ app.use(cors());
 app.use(express.json());
 
 const livresRoutes = require("./routes/livresRoutes");
+const empruntsRoutes = require("./routes/empruntsRoutes");
 
 app.use("/api/livres", livresRoutes);
+app.use("/api/emprunts", empruntsRoutes);
 
 const clientDist = path.join(__dirname, "../client/dist");
 
@@ -28,7 +30,7 @@ if (fs.existsSync(clientDist)) {
       message: "API Bibliothèque numérique",
       endpoints: {
         livres: "/api/livres",
-        emprunts: "/api/livres/emprunts?email=votre@email.com",
+        emprunts: "/api/emprunts?email=votre@email.com",
       },
     });
   });
