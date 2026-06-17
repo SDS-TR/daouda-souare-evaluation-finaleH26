@@ -16,19 +16,43 @@ const empruntsRoutes = require("./routes/empruntsRoutes");
 app.use("/api/livres", livresRoutes);
 app.use("/api/emprunts", empruntsRoutes);
 
-const clientDist = path.join(__dirname, "../client/dist");
+app.get("/api/health", (req, res) => {
+  const db = require("./config/db");
+  db.query("SELECT 1 AS ok", (err) => {
+    if (err) {
+      return res.status(503).json({
+        status: "error",
+        message: "Connexion MySQL impossible",
+        details: err.message,
+      });
+    }
+    res.json({ status: "ok", message: "API et base de données opérationnelles" });
+  });
+});
 
-if (fs.existsSync(clientDist)) {
+const staticCandidates = [
+  path.join(__dirname, "public"),
+  path.join(__dirname, "../client/dist"),
+];
+
+const clientDist = staticCandidates.find((dir) =>
+  fs.existsSync(path.join(dir, "index.html"))
+);
+
+if (clientDist) {
+  console.log(`Frontend servi depuis : ${clientDist}`);
   app.use(express.static(clientDist));
 
   app.get(/^(?!\/api).*/, (req, res) => {
     res.sendFile(path.join(clientDist, "index.html"));
   });
 } else {
+  console.warn("Aucun build frontend trouvé (public/ ou client/dist).");
   app.get("/", (req, res) => {
     res.json({
       message: "API Bibliothèque numérique",
       endpoints: {
+        health: "/api/health",
         livres: "/api/livres",
         emprunts: "/api/emprunts?email=votre@email.com",
       },

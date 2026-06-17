@@ -4,5 +4,6 @@ node_modules/
 !.env.example
 dist/
 build/
+server/public/
 .vscode/
 .DS_Store

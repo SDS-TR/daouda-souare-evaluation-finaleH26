@@ -146,23 +146,35 @@ Le scénario E2E :
 
 ## Déploiement sur Render
 
+### Paramètres du service
+
 | Paramètre | Valeur |
 |-----------|--------|
 | Root Directory | `server` |
 | Build Command | `npm install && npm run build` |
 | Start Command | `npm start` |
 
-### Variables d'environnement Render
+### Variables d'environnement obligatoires
 
-| Variable | Description |
-|----------|-------------|
-| `DB_HOST` | Hôte MySQL |
-| `DB_USER` | Utilisateur MySQL |
-| `DB_PASSWORD` | Mot de passe MySQL |
-| `DB_NAME` | Nom de la base |
-| `DB_PORT` | Port MySQL (obligatoire pour Railway) |
+| Variable | Exemple | Description |
+|----------|---------|-------------|
+| `DB_HOST` | `xxx.proxy.rlwy.net` | Hôte MySQL Railway |
+| `DB_USER` | `root` | Utilisateur MySQL |
+| `DB_PASSWORD` | `***` | Mot de passe MySQL |
+| `DB_NAME` | `railway` | Nom de la base |
+| `DB_PORT` | `41790` | **Port MySQL Railway (obligatoire)** |
 
-Render définit automatiquement `PORT` pour le serveur Express. Le build compile le client React et le serveur le sert en production.
+> Ne confondez pas `DB_PORT` (MySQL) avec `PORT` (Express). Render définit `PORT` automatiquement.
+
+### Vérification après déploiement
+
+1. `https://votre-app.onrender.com/` → doit afficher l'application React
+2. `https://votre-app.onrender.com/api/health` → doit retourner `{ "status": "ok" }`
+3. `https://votre-app.onrender.com/api/livres` → doit retourner un tableau de livres
+
+Si vous voyez seulement un JSON avec `"message": "API Bibliothèque numérique"`, le build du client a échoué : vérifiez les logs Render.
+
+Si `/api/livres` retourne `{"fatal":true}`, la connexion MySQL est incorrecte : vérifiez `DB_PORT` et les autres variables.
 
 ## Auteur
 
