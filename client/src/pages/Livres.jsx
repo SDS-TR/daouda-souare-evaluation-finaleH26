@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../config/api";
 
 function Livres() {
   const [livres, setLivres] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/livres").then((res) => {
+    axios.get(`${API_URL}/api/livres`).then((res) => {
       setLivres(res.data);
     });
   }, []);

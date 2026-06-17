@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import API_URL from "../config/api";
 
 function MesEmprunts() {
 
@@ -18,7 +19,7 @@ function MesEmprunts() {
         setLoading(true);
 
         axios
-        .get("http://localhost:5000/api/livres/emprunts", {
+        .get(`${API_URL}/api/livres/emprunts`, {
             params: { email }
         })
         .then(res => {

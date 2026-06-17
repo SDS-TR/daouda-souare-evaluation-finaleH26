@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "build": "cd ../client && npm install && npm run build",
+    "start": "node server.js",
     "test": "jest",
     "proxy": "http://localhost:5000"
   },
