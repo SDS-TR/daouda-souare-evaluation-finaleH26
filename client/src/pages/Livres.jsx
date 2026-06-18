@@ -5,15 +5,21 @@ import API_URL from "../config/api";
 function Livres() {
   const [livres, setLivres] = useState([]);
   const [erreur, setErreur] = useState("");
+  const [chargement, setChargement] = useState(true);
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/api/livres`)
+      .get(`${API_URL}/api/livres`, { timeout: 90000 })
       .then((res) => {
         setLivres(res.data);
       })
       .catch(() => {
-        setErreur("Impossible de charger les livres. Vérifiez que l'API Render est démarrée.");
+        setErreur(
+          "Impossible de charger les livres. L'API Render peut mettre jusqu'à 1 minute à démarrer. Réessayez dans quelques secondes."
+        );
+      })
+      .finally(() => {
+        setChargement(false);
       });
   }, []);
 
@@ -21,6 +27,7 @@ function Livres() {
     <>
       <h1>Livres disponibles</h1>
 
+      {chargement && <p>Chargement des livres depuis l'API...</p>}
       {erreur && <p>{erreur}</p>}
 
       <table

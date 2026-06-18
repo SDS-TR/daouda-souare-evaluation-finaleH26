@@ -20,7 +20,8 @@ function MesEmprunts() {
 
         axios
         .get(`${API_URL}/api/emprunts`, {
-            params: { email }
+            params: { email },
+            timeout: 90000,
         })
         .then(res => {
             setEmprunts(res.data);
