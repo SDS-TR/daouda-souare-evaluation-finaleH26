@@ -4,16 +4,24 @@ import API_URL from "../config/api";
 
 function Livres() {
   const [livres, setLivres] = useState([]);
+  const [erreur, setErreur] = useState("");
 
   useEffect(() => {
-    axios.get(`${API_URL}/api/livres`).then((res) => {
-      setLivres(res.data);
-    });
+    axios
+      .get(`${API_URL}/api/livres`)
+      .then((res) => {
+        setLivres(res.data);
+      })
+      .catch(() => {
+        setErreur("Impossible de charger les livres. Vérifiez que l'API Render est démarrée.");
+      });
   }, []);
 
   return (
     <>
       <h1>Livres disponibles</h1>
+
+      {erreur && <p>{erreur}</p>}
 
       <table
         border="1"

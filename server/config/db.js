@@ -41,6 +41,11 @@ if (config.host && config.host.includes("railway.internal")) {
   );
 }
 
+if (config.host && config.host.includes("rlwy.net") && config.port === 3306) {
+  console.error("DB_PORT manquant ou incorrect : Railway n'utilise pas le port 3306.");
+  console.error("Ajoutez DB_PORT=41790 sur Render (Railway > Connect > Public Network).");
+}
+
 const db = mysql.createConnection({
   ...config,
   connectTimeout: 20000,

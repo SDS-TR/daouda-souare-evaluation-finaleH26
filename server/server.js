@@ -74,8 +74,18 @@ if (process.env.RENDER) {
   if (!process.env.DB_HOST && !process.env.MYSQL_PUBLIC_URL) {
     console.error("ATTENTION : aucune configuration MySQL détectée sur Render.");
   }
+
+  if (process.env.DB_HOST && !process.env.DB_PORT && !process.env.MYSQL_PUBLIC_URL) {
+    console.error("ATTENTION : DB_PORT manquant sur Render (ex: 41790 pour Railway).");
+  }
 }
 
 app.listen(PORT, () => {
-  console.log(`Serveur lancé sur le port ${PORT}`);
+  if (process.env.RENDER) {
+    console.log(
+      `Serveur lancé sur le port ${PORT} (port fourni automatiquement par Render)`
+    );
+  } else {
+    console.log(`Serveur lancé sur le port ${PORT}`);
+  }
 });
