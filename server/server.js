@@ -62,6 +62,20 @@ if (clientDist) {
 
 const PORT = process.env.PORT || 5000;
 
+if (process.env.RENDER) {
+  if (process.env.DB_PORT && String(PORT) === String(process.env.DB_PORT)) {
+    console.error(
+      "ATTENTION : PORT et DB_PORT ont la même valeur (" +
+        PORT +
+        "). Supprimez PORT des variables Render."
+    );
+  }
+
+  if (!process.env.DB_HOST && !process.env.MYSQL_PUBLIC_URL) {
+    console.error("ATTENTION : aucune configuration MySQL détectée sur Render.");
+  }
+}
+
 app.listen(PORT, () => {
   console.log(`Serveur lancé sur le port ${PORT}`);
 });
